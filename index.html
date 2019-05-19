@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+        <meta charset="utf-8">
+        
+        <script src="https://cdn.apple-mapkit.com/mk/5.x.x/mapkit.js"></script>
+        
+        <style>
+        #map {
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            bottom: 0px;
+            right: 0px;
+        }
+        </style>
+        
+        </head>
+        
+        <body>
+        <div id="map"></div>
+        
+        <script> 
+        var MarkerAnnotation = mapkit.MarkerAnnotation;
+        // var malafemmena = 
+
+        function Place(coordinate, name, rank) {
+            this.coordinate = coordinate;
+            this.name = name;
+            this.rank = rank;
+        }
+
+        var places = [
+            new Place(new mapkit.Coordinate(52.473679,13.338323), "Malafemmena", 0),
+            new Place(new mapkit.Coordinate(52.493917,13.362183), "Prometeo", 1),
+            new Place(new mapkit.Coordinate(52.517286,13.471357), "FUTURA", 2),
+            new Place(new mapkit.Coordinate(52.485839,13.435279), "Monella", 3),
+            new Place(new mapkit.Coordinate(52.532953,13.408646), "STANDARD SERIOUS PIZZA", 4),
+            new Place(new mapkit.Coordinate(52.496050,13.422360), "Zola", 5),
+            new Place(new mapkit.Coordinate(52.491170,13.425859), "Gazzo", 6)
+        ]
+
+        mapkit.init({
+            authorizationCallback: function(done) {
+                done("eyJhbGciOiJFUzI1NiIsImtpZCI6IlJOVjk0ODVaUjkiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiI5NkhHNkUyV0o2IiwiaWF0IjoiMTU1ODg5MDE1OCIsImV4cCI6MTU1OTkyNjk1OCwib3JpZ2luIjoiaHR0cHM6Ly9odW5ncnkuZGV2In0.EhCDVhcNUVnhHhOUmHdm7mRDamlRODzGjjqhZs5poly2RNq8KFctFDPUBetHtSGdlRfgIbb_Lbi166dQxU0cbw");
+            }
+        });
+    
+        var map = new mapkit.Map("map");
+        var annotations = places.map(place => {
+            var annotation = new MarkerAnnotation(place.coordinate);
+            annotation.title = place.name;
+            annotation.subtitle = "#" + (place.rank + 1);
+            annotation.selected = place.rank == 0
+            return annotation;
+        });
+        map.showItems(annotations);
+        </script>
+        </body>
+        </html>
