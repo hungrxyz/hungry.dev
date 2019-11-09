@@ -1,4 +1,6 @@
-# Hungry development
+---
+layout: default
+---
 
 ## 2019
-- [Using SwiftUI View together with a UIViewController](swiftui-view-with-viewcontroller.html)
+[How to use SwiftUI View as a UIViewController](./posts/2019/how-to-use-swiftui-view-as-a-uiviewcontroller.md)
