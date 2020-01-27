@@ -27,7 +27,7 @@ final class HungryHostingController : UIHostingController<HungryView> {
 ```
 Subclassing `UIHostingController` with `Content` type of `HungryView` is enough to wrap `HungryView` into a `UIViewController`.
 
-Now we can create a `HungryHostingController` object with an instance of `HungryView` and use it as any normal`UIViewController`. In this example we push it on a navigation stack like this:
+Now we can create a `HungryHostingController` object with an instance of `HungryView` and use it as any normal `UIViewController`. In this example we push it on a navigation stack like this:
 ```swift
 let hungryView = HungryView()
 let hungryHostingController = HungryHostingController(rootView: hungryView)

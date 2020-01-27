@@ -8,4 +8,4 @@
 import Foundation
 import Publish
 
-try HungryDev().publish(withTheme: .foundation)
+try HungryDev().publish(withTheme: .hungry)
