@@ -8,11 +8,9 @@
 import Foundation
 import Publish
 import SplashPublishPlugin
-import Ink
 
 try HungryDev().publish(using: [
     .installPlugin(.splash(withClassPrefix: "")),
-//    .optional(.copyResources()),
     .addMarkdownFiles(),
     .sortItems(by: \.date, order: .descending),
     .generateHTML(withTheme: .hungry),

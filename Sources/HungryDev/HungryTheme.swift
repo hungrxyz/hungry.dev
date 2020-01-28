@@ -28,6 +28,8 @@ private struct HungryHTMLFactory<Site: Website>: HTMLFactory {
             .body(
                 .header(for: context, selectedSection: nil),
                 .container(
+                    .h3(.text("Hi, this is my personal blog. I write about development on Apple Platforms.")),
+                    .h2(.text("Posts")),
                     .itemList(
                         for: context.allItems(
                             sortedBy: \.date,
@@ -115,10 +117,10 @@ private extension Node where Context == HTML.BodyContext {
 
     static func itemList<T: Website>(for items: [Item<T>], on site: T) -> Node {
         return .forEach(items) { item in
-            .a(
+            .p(.a(
                 .text(item.title),
                 .href(item.path)
-            )
+            ))
         }
     }
 
