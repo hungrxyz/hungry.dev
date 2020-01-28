@@ -21,9 +21,7 @@ In order to expose `HungryView` to `UIKit`, we wrap it in a `UIHostingController
 ```swift
 import SwiftUI
 
-final class HungryHostingController : UIHostingController<HungryView> {
-
-}
+final class HungryHostingController : UIHostingController<HungryView> { }
 ```
 Subclassing `UIHostingController` with `Content` type of `HungryView` is enough to wrap `HungryView` into a `UIViewController`.
 
