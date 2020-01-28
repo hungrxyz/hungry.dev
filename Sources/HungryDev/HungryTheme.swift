@@ -11,7 +11,10 @@ import Plot
 public extension Theme {
     static var hungry: Self {
         Theme(
-            htmlFactory: HungryHTMLFactory(), resourcePaths: ["Resources/HungryTheme/primer.css"]
+            htmlFactory: HungryHTMLFactory(), resourcePaths: [
+                "Resources/HungryTheme/primer.css",
+                "Resources/Splash/highlight.css"
+            ]
         )
     }
 }
@@ -52,7 +55,7 @@ private struct HungryHTMLFactory<Site: Website>: HTMLFactory {
                       context: PublishingContext<Site>) throws -> HTML {
         HTML(
             .lang(context.site.language),
-            .head(for: item, on: context.site, stylesheetPaths: ["/primer.css"]),
+            .head(for: item, on: context.site, stylesheetPaths: ["/primer.css", "/highlight.css"]),
             .body(
                 .header(for: context, selectedSection: nil),
                 .container(.contentBody(item.body)),
