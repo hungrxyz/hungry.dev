@@ -13,7 +13,7 @@ struct HungryDev: Website {
 
     var url = URL(string: "https://hungry.dev")!
     var name = "hungry.dev"
-    var description = "Personal blog about iOS development."
+    var description = "Personal blog."
     var language: Language { .english }
     var imagePath: Path? { nil }
 }
