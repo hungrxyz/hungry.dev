@@ -37,7 +37,8 @@ private struct HungryHTMLFactory<Site: Website>: HTMLFactory {
                             order: .descending
                         ),
                         on: context.site
-                    )
+                    ),
+                    .footer(for: context.site)
                 )
             )
         )
@@ -147,12 +148,19 @@ private extension Node where Context == HTML.BodyContext {
 
     static func footer<T: Website>(for site: T) -> Node {
         return .footer(
-            .container(
+            .div(
+                .class("my-6 d-flex flex-justify-center"),
                 .p(
+                    .class("text-small text-gray v-align-middle"),
                     .text("Generated using "),
                     .a(
                         .text("Publish"),
                         .href("https://github.com/johnsundell/publish")
+                    ),
+                    .text(" | Styled using "),
+                    .a(
+                        .text("Primer"),
+                        .href("https://primer.style")
                     )
                 )
             )
