@@ -24,5 +24,6 @@ try HungryDev().publish(using: [
     .addMarkdownFiles(),
     .sortItems(by: \.date, order: .descending),
     .generateHTML(withTheme: .hungry),
-    .generateSiteMap()
+    .generateSiteMap(),
+    .copyFile(at: "Resources/CNAME")
 ])
