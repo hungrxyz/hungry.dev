@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  HungryTheme.swift
 //  
 //
 //  Created by marko on 26.01.20.
@@ -32,10 +32,7 @@ private struct HungryHTMLFactory<Site: Website>: HTMLFactory {
                     .h3(.text("Hi, this is my personal blog. I write about development on Apple Platforms.")),
                     .h2(.text("Posts")),
                     .itemList(
-                        for: context.allItems(
-                            sortedBy: \.date,
-                            order: .descending
-                        ),
+                        for: context.allItems(sortedBy: \.date, order: .descending),
                         on: context.site
                     ),
                     .footer(for: context.site)
