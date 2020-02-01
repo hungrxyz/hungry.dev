@@ -93,7 +93,7 @@ private struct HungryHTMLFactory<Site: Website>: HTMLFactory {
 
 private extension Node where Context == HTML.BodyContext {
     static func container(_ nodes: Node..., marginY: Int = 5) -> Node {
-        .div(.class("container-lg px-3 my-\(marginY) markdown-body"), .group(nodes))
+        .div(.class("container-md px-3 my-\(marginY) markdown-body"), .group(nodes))
     }
 
     static func header<T: Website>(
