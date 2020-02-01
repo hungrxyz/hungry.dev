@@ -8,7 +8,7 @@ struct HungryDev: Website {
     }
 
     struct ItemMetadata: WebsiteItemMetadata {
-
+        let date: Date
     }
 
     var url = URL(string: "https://hungry.dev")!

@@ -1,5 +1,5 @@
 ---
-layout: default
+date: 2019-10-23 10:00
 ---
 
 # How to use SwiftUI View as a UIViewController

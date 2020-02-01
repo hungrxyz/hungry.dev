@@ -5,6 +5,7 @@
 //  Created by marko on 26.01.20.
 //
 
+import Foundation.NSDateFormatter
 import Publish
 import Plot
 
@@ -99,7 +100,7 @@ private extension Node where Context == HTML.BodyContext {
         for context: PublishingContext<T>,
         selectedSection: T.SectionID?
     ) -> Node {
-        return .header(
+        .header(
             .div(
                 .class("border-bottom border-gray-light"),
                 .container(
@@ -116,11 +117,31 @@ private extension Node where Context == HTML.BodyContext {
     }
 
     static func itemList<T: Website>(for items: [Item<T>], on site: T) -> Node {
-        return .forEach(items) { item in
-            .p(.a(
-                .text(item.title),
-                .href(item.path)
-            ))
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d"
+
+        let itemsPerYear: [Int: [Item<T>]] = items.reduce(into: [:]) { result, item in
+            result[item.date.year, default: []].append(item)
+        }
+
+        return .forEach(itemsPerYear) {
+            .div(
+                .h3("\($0.key)"),
+                .forEach($0.value) { item in
+                    .div(
+                        .class("d-flex flex-justify-between flex-items-center"),
+                        .div(.a(
+                            .text(item.title),
+                            .href(item.path)
+                            )
+                        ),
+                        .div(
+                            .class("text-small text-gray"),
+                            .text(dateFormatter.string(from: item.date))
+                        )
+                    )
+                }
+            )
         }
     }
 
@@ -136,5 +157,11 @@ private extension Node where Context == HTML.BodyContext {
                 )
             )
         )
+    }
+}
+
+private extension Date {
+    var year: Int {
+        return Calendar.current.component(.year, from: self)
     }
 }
