@@ -34,9 +34,9 @@ private struct HungryHTMLFactory<Site: Website>: HTMLFactory {
                     .itemList(
                         for: context.allItems(sortedBy: \.date, order: .descending),
                         on: context.site
-                    ),
-                    .footer(for: context.site)
-                )
+                    )
+                ),
+                .footer(for: context.site)
             )
         )
     }
@@ -54,12 +54,21 @@ private struct HungryHTMLFactory<Site: Website>: HTMLFactory {
 
     func makeItemHTML(for item: Item<Site>,
                       context: PublishingContext<Site>) throws -> HTML {
-        HTML(
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d, yyyy"
+
+        return HTML(
             .lang(context.site.language),
             .head(for: item, on: context.site, stylesheetPaths: ["/primer.css", "/highlight.css"]),
             .body(
                 .header(for: context, selectedSection: nil),
-                .container(.contentBody(item.body)),
+                .container(
+                    .p(
+                        .class("text-small text-gray"),
+                        .text(dateFormatter.string(from: item.date))
+                    ),
+                    .contentBody(item.body)
+                ),
                 .footer(for: context.site)
             )
         )
