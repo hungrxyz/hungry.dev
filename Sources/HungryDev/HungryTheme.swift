@@ -55,7 +55,7 @@ private struct HungryHTMLFactory<Site: Website>: HTMLFactory {
     func makeItemHTML(for item: Item<Site>,
                       context: PublishingContext<Site>) throws -> HTML {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM d, yyyy"
+        dateFormatter.dateFormat = "d MMMM yyyy"
 
         return HTML(
             .lang(context.site.language),
@@ -125,7 +125,7 @@ private extension Node where Context == HTML.BodyContext {
 
     static func itemList<T: Website>(for items: [Item<T>], on site: T) -> Node {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM d"
+        dateFormatter.dateFormat = "d MMM"
 
         let itemsPerYear: [Int: [Item<T>]] = items.reduce(into: [:]) { result, item in
             result[item.date.year, default: []].append(item)
