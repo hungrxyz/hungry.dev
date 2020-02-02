@@ -158,15 +158,20 @@ private extension Node where Context == HTML.BodyContext {
                 .class("my-6 d-flex flex-justify-center"),
                 .p(
                     .class("text-small text-gray v-align-middle"),
-                    .text("Generated using "),
+                    .text("Styled with "),
+                    .a(
+                        .text("Primer"),
+                        .href("https://primer.style")
+                    ),
+                    .text(" | Generated using "),
                     .a(
                         .text("Publish"),
                         .href("https://github.com/johnsundell/publish")
                     ),
-                    .text(" | Styled using "),
+                    .text(" | Hosted on "),
                     .a(
-                        .text("Primer"),
-                        .href("https://primer.style")
+                        .text("GitHub Pages"),
+                        .href("https://pages.github.com")
                     )
                 )
             )
