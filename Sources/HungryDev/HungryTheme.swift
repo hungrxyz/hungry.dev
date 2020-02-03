@@ -154,24 +154,26 @@ private extension Node where Context == HTML.BodyContext {
 
     static func footer<T: Website>(for site: T) -> Node {
         return .footer(
-            .div(
-                .class("my-6 d-flex flex-justify-center"),
-                .p(
-                    .class("text-small text-gray v-align-middle"),
-                    .text("Styled with "),
-                    .a(
-                        .text("Primer"),
-                        .href("https://primer.style")
-                    ),
-                    .text(" | Generated using "),
-                    .a(
-                        .text("Publish"),
-                        .href("https://github.com/johnsundell/publish")
-                    ),
-                    .text(" | Hosted on "),
-                    .a(
-                        .text("GitHub Pages"),
-                        .href("https://pages.github.com")
+            .container(
+                .div(
+                    .class("d-flex flex-justify-center"),
+                    .p(
+                        .class("text-small text-gray v-align-middle"),
+                        .text("Styled with "),
+                        .a(
+                            .text("Primer"),
+                            .href("https://primer.style")
+                        ),
+                        .text(" | Generated using "),
+                        .a(
+                            .text("Publish"),
+                            .href("https://github.com/johnsundell/publish")
+                        ),
+                        .text(" | Hosted on "),
+                        .a(
+                            .text("GitHub Pages"),
+                            .href("https://pages.github.com")
+                        )
                     )
                 )
             )
