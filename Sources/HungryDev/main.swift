@@ -7,7 +7,7 @@
 
 import Foundation
 import Publish
-import SplashPublishPlugin
+import PygmentsPublishPlugin
 
 public extension Plugin {
     /// Fixing date formatter locale to `en_US` since all dates for posts are in `yyyy-MM-dd HH:mm`.
@@ -20,7 +20,7 @@ public extension Plugin {
 
 try HungryDev().publish(using: [
     .installPlugin(.usLocaleDateFormatter()),
-    .installPlugin(.splash(withClassPrefix: "")),
+    .installPlugin(.pygmentize()),
     .addMarkdownFiles(),
     .sortItems(by: \.date, order: .descending),
     .generateHTML(withTheme: .hungry),

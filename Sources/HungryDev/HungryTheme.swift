@@ -14,7 +14,7 @@ public extension Theme {
         Theme(
             htmlFactory: HungryHTMLFactory(), resourcePaths: [
                 "Resources/HungryTheme/primer.css",
-                "Resources/Splash/highlight.css"
+                "Resources/Pygments/github.css"
             ]
         )
     }
@@ -59,7 +59,7 @@ private struct HungryHTMLFactory<Site: Website>: HTMLFactory {
 
         return HTML(
             .lang(context.site.language),
-            .head(for: item, on: context.site, stylesheetPaths: ["/primer.css", "/highlight.css"]),
+            .head(for: item, on: context.site, stylesheetPaths: ["/primer.css", "/github.css"]),
             .body(
                 .header(for: context, selectedSection: nil),
                 .container(
