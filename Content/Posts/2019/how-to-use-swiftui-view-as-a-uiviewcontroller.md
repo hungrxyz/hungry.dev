@@ -33,5 +33,5 @@ let hungryHostingController = HungryHostingController(rootView: hungryView)
 navigationController.pushViewController(hungryHostingController, animated: true)
 ```
 
-And that's all it takes to use your shiny new SwiftUI `View` like an oldfashined `UIViewController`. 
+And that's all it takes to use your shiny new SwiftUI `View` like an old fashioned `UIViewController`. 
 
