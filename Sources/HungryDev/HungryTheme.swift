@@ -131,10 +131,10 @@ private extension Node where Context == HTML.BodyContext {
             result[item.date.year, default: []].append(item)
         }
 
-        return .forEach(itemsPerYear) {
+        return .forEach(itemsPerYear.sorted { $0.key > $1.key }) {
             .div(
                 .h3("\($0.key)"),
-                .forEach($0.value) { item in
+                .forEach($0.value.sorted { $0.date > $1.date }) { item in
                     .div(
                         .class("d-flex flex-justify-between flex-items-center"),
                         .div(.a(

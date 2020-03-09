@@ -63,7 +63,7 @@ try HungryDev().publish(using: [
     .installPlugin(.usLocaleDateFormatter()),
     .installPlugin(.pygmentize()),
     .addMarkdownFiles(),
-    .sortItems(by: \.date, order: .descending),
+    .sortItems(by: \.date, order: .ascending),
     .generateHTML(withTheme: .hungry),
     .generateSiteMap(),
     .copyFile(at: "Resources/CNAME")
