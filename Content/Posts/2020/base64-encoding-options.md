@@ -2,7 +2,7 @@
 date: 2020-03-8 19:18
 ---
 
-# Base64EncodingOptions by Example
+# Base64 Encoding Options
 Encoding binary data to [Base64](https://en.wikipedia.org/wiki/Base64) is a common operation in the programming world. Simplest usecase is probably to transport binary data over the network in common encoding so it doesn't get currupt while being processed by different systems. There are more [usecases](https://en.wikipedia.org/wiki/Base64#Implementations_and_history), some of them are also mentioned in examples bellow.
 
 In this article we will go over the different encoding options provided in Apple's [Foundation](https://developer.apple.com/documentation/foundation) framework as part of the [`Data`](https://developer.apple.com/documentation/foundation/data) object.
