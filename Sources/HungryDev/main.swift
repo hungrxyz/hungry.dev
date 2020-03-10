@@ -10,6 +10,16 @@ import Publish
 import Ink
 import ShellOut
 
+let binPath: String = {
+    #if os(Linux)
+        return "/usr/bin/"
+    #elseif os(macOS)
+        return "/usr/local/bin/"
+    #else
+        return "/"
+    #endif
+}()
+
 public extension Plugin {
     static func pygmentize() -> Self {
         Plugin(name: "Pygments") { context in
@@ -39,7 +49,7 @@ public extension Modifier {
                 .dropLast("\n```".count)
 
             let markdownString = String(markdown).replacingOccurrences(of: "\"", with: "\\\"")
-            let cmd = #"echo "\#(markdownString)" | /usr/bin/pygmentize -s -l \#(String(language)) -f html -O nowrap"#
+            let cmd = #"echo "\#(markdownString)" | \#(binPath)pygmentize -s -l \#(String(language)) -f html -O nowrap"#
 
             if let highlighted = try? shellOut(to: cmd) {
                 return "<pre><code>" + highlighted + "\n</code></pre>"
