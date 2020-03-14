@@ -16,7 +16,7 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: '3.x'
-    - run: pip3 install pygments
+    - run: pip3 install pygments -t /usr/local/bin
       
     - name: Install Swift
       uses: YOCKOW/Action-setup-swift@master
