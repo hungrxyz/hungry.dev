@@ -10,14 +10,12 @@ import Publish
 import Ink
 import ShellOut
 
-//let binPath: String = {
-//    #if os(Linux)
-//        return "/usr/bin/"
-//    #elseif os(macOS)
-        return "/usr/local/bin/"
-//    #else
-//        return "/"
-//    #endif
+let binPath: String = {
+    #if os(Linux)
+    return "/usr/bin/"
+    #elseif os(macOS)
+    return "/usr/local/bin/"
+    #endif
 }()
 
 public extension Plugin {
@@ -49,16 +47,30 @@ public extension Modifier {
                 .dropLast("\n```".count)
 
             let markdownString = String(markdown).replacingOccurrences(of: "\"", with: "\\\"")
-            let cmd = #"echo "\#(markdownString)" | \#(binPath)pygmentize -s -l \#(String(language)) -f html -O nowrap"#
-
-            if let highlighted = try? shellOut(to: cmd) {
-                return "<pre><code>" + highlighted + "\n</code></pre>"
+            let cmd = #"echo "\#(markdownString)" | \#(binPath)/pygmentize -s -l \#(String(language)) -f html -O nowrap"#
+            
+            do {
+                let highlighted = try shellOut(to: cmd)
+                return highlighted.preCodeWrapped
+            } catch {
+                print("Failed Syntax Highlighting", error.localizedDescription)
+                return markdown.preCodeWrapped
             }
-            return "<pre><code>" + String(markdown) + "\n</code></pre>"
         }
     }
 }
 
+private extension String {
+    var preCodeWrapped: String {
+        "<pre><code>" + self + "\n</code></pre>"
+    }
+}
+
+private extension Substring {
+    var preCodeWrapped: String {
+        String(self).preCodeWrapped
+    }
+}
 
 public extension Plugin {
     /// Fixing date formatter locale to `en_US` since all dates for posts are in `yyyy-MM-dd HH:mm`.
