@@ -17,7 +17,7 @@ jobs:
       with:
         python-version: '3.x'
     - run: |
-        pip3 install pygments
+        pip3 install --prefix /usr/local pygments
         pip3 show pygments
       
     - name: Install Swift

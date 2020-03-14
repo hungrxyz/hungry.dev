@@ -10,14 +10,14 @@ import Publish
 import Ink
 import ShellOut
 
-let binPath: String = {
-    #if os(Linux)
-        return "/usr/bin/"
-    #elseif os(macOS)
+//let binPath: String = {
+//    #if os(Linux)
+//        return "/usr/bin/"
+//    #elseif os(macOS)
         return "/usr/local/bin/"
-    #else
-        return "/"
-    #endif
+//    #else
+//        return "/"
+//    #endif
 }()
 
 public extension Plugin {
