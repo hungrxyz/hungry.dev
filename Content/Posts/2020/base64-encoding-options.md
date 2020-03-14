@@ -25,7 +25,7 @@ data.base64EncodedString()
 ```
 
 ##### Result
-```
+```no-highlight
 AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQ==
 ```
 
@@ -43,14 +43,14 @@ data.base64EncodedString(options: .lineLength64Characters)
 ```
 
 ##### Pretty Result
-```
+```no-highlight
 AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB
 AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB
 AQEBAQ==
 ```
 
 ##### Raw Result
-```
+```no-highlight
 AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB\r\nAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB\r\nAQEBAQ==
 ```
 
@@ -68,13 +68,13 @@ data.base64EncodedString(options: .lineLength76Characters)
 ```
 
 ##### Pretty Result
-```
+```no-highlight
 AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB
 AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQ==
 ```
 
 ##### Raw Result
-```
+```no-highlight
 AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB\r\nAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQ==
 ```
 
@@ -88,7 +88,7 @@ Similar as `lineLength64Characters`, expect a line ending is inserted every 76 c
 Prerequisite for line end options to have an effect is to pair them with one of the line length options, otherwise the result is a single line string and no line endings are inserted. By default all (two) line end options are enabled as shown in Line Length examples. 
 
 The following examples use `lineLength64Characters` as a required line length option. For that reason pretty results are not shown on a per option basis since they all look the same:
-```
+```no-highlight
 AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB
 AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB
 AQEBAQ==
@@ -103,7 +103,7 @@ data.base64EncodedString(options: [.lineLength64Characters, .endLineWithCarriage
 ```
 
 ##### Raw Result
-```
+```no-highlight
 AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB\rAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB\rAQEBAQ==
 ```
 
@@ -120,7 +120,7 @@ data.base64EncodedString(options: [.lineLength64Characters, .endLineWithLineFeed
 ```
 
 ##### Raw Result
-```
+```no-highlight
 AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB\nAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB\nAQEBAQ==
 ```
 
