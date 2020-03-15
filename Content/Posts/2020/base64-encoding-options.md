@@ -3,7 +3,7 @@ date: 2020-03-8 19:18
 ---
 
 # Base64 Encoding Options
-Encoding binary data to [Base64](https://en.wikipedia.org/wiki/Base64) is a common operation in the programming world. Simplest usecase is probably to [transport binary data over the network](https://stackoverflow.com/a/201510) in common encoding so it doesn't get currupt while being processed by different systems. There are more [usecases](https://en.wikipedia.org/wiki/Base64#Implementations_and_history), some of them are also mentioned in examples bellow.
+Encoding binary data to [Base64](https://en.wikipedia.org/wiki/Base64) is a common operation in the programming world. Simplest [use case](https://stackoverflow.com/a/201510) is probably to transport binary data over the network in common encoding so it doesn't get currupt while being processed by different systems. There are more [use cases](https://en.wikipedia.org/wiki/Base64#Implementations_and_history), some of them are also mentioned in examples bellow.
 
 In this article we will go over the different encoding options provided in Apple's [Foundation](https://developer.apple.com/documentation/foundation) framework as part of the [`Data`](https://developer.apple.com/documentation/foundation/data) object.
 
@@ -56,7 +56,7 @@ AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB\r\nAQEBAQEBAQEB
 Inserts a line ending in form of `\r\n` every 64 characters. We'll get to what `\r\n` means and how it can be modified in the Line Endings section.
 
 ### 76 Characters - [`lineLength76Characters`](https://developer.apple.com/documentation/foundation/nsdata/base64encodingoptions/1413700-linelength76characters)
-Common usecase of 76 character line length is for Multipurpose Internet Mail Extensions (MIME) standard which is used to transport email messages. Check out the _Base64 Content-Transfer-Encoding_ section of [RFC 2045](https://tools.ietf.org/html/rfc2045#section-6.8) for more information.
+Common use case of 76 character line length is for Multipurpose Internet Mail Extensions (MIME) standard which is used to transport email messages. Check out the _Base64 Content-Transfer-Encoding_ section of [RFC 2045](https://tools.ietf.org/html/rfc2045#section-6.8) for more information.
 
 ###### Usage
 ```swift
