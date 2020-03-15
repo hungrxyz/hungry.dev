@@ -57,6 +57,9 @@ private struct HungryHTMLFactory<Site: Website>: HTMLFactory {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d MMMM yyyy"
 
+        let postURLString = "https://hungry.dev/posts/\(item.path)"
+        let twitterShareURLString = "https://twitter.com/intent/tweet?url=\(postURLString)&via=hngrydev&text=\(item.title)"
+
         return HTML(
             .lang(context.site.language),
             .head(for: item, on: context.site, stylesheetPaths: ["/primer.css", "/github.css"]),
@@ -67,7 +70,21 @@ private struct HungryHTMLFactory<Site: Website>: HTMLFactory {
                         .class("text-small text-gray"),
                         .text(dateFormatter.string(from: item.date))
                     ),
-                    .contentBody(item.body)
+                    .contentBody(item.body),
+                    .p(
+                        .class("py-2"),
+                        .a(
+                            .text("Share this article on Twitter"),
+                            .href(twitterShareURLString)
+                        ),
+                        .text(". "),
+                        .text("For any questions, comments or feedback reach out to me "),
+                        .a(
+                            .text("@hngrydev"),
+                            .href("https://twitter.com/hngrydev")
+                        ),
+                        .text(".")
+                    )
                 ),
                 .footer(for: context.site)
             )
