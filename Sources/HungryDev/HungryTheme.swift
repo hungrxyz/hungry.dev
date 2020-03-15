@@ -153,7 +153,7 @@ private extension Node where Context == HTML.BodyContext {
                 .h3("\($0.key)"),
                 .forEach($0.value.sorted { $0.date > $1.date }) { item in
                     .div(
-                        .class("d-flex flex-justify-between flex-items-center"),
+                        .class("py-2 d-flex flex-justify-between flex-items-center"),
                         .div(.a(
                             .text(item.title),
                             .href(item.path)
