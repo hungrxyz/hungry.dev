@@ -1,0 +1,50 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="og:site_name" content="hungry.dev"/><link rel="canonical" href="https://hungry.dev/posts/2020/exporting-private-rsa-seckey-as-pkcs1-pem"/><meta name="twitter:url" content="https://hungry.dev/posts/2020/exporting-private-rsa-seckey-as-pkcs1-pem"/><meta name="og:url" content="https://hungry.dev/posts/2020/exporting-private-rsa-seckey-as-pkcs1-pem"/><title>Exporting Private RSA SecKey as PKCS #1 PEM | hungry.dev</title><meta name="twitter:title" content="Exporting Private RSA SecKey as PKCS #1 PEM | hungry.dev"/><meta name="og:title" content="Exporting Private RSA SecKey as PKCS #1 PEM | hungry.dev"/><meta name="description" content="Personal blog."/><meta name="twitter:description" content="Personal blog."/><meta name="og:description" content="Personal blog."/><meta name="twitter:card" content="summary"/><link rel="stylesheet" href="/primer.css" type="text/css"/><link rel="stylesheet" href="/github.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to hungry.dev"/></head><body><header><div class="border-bottom border-gray-light"><div class="container-md px-3 my-3 markdown-body"><h3><a class="text-gray-dark no-underline" href="/">hungry.dev</a></h3></div></div></header><div class="container-md px-3 my-5 markdown-body"><p class="text-small text-gray">15 March 2020</p><h1>Exporting Private RSA SecKey as PKCS #1 PEM</h1><p>If you have a RSA private key that you want to send somewhere, most likely you would want it in <a href="https://en.wikipedia.org/wiki/PKCS_1">PKCS #1</a> <a href="https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail">PEM</a> format to ensure compatibility with other systems.</p><blockquote><p>⚠️ Exporting a private key from its <code>SecKey</code> reference should never be recommended for reasons that it might get compromised by an untrusted entity.</p></blockquote><h2>Example SecKey</h2><p>Example SecKey has following characteristics:</p><ul><li>RSA type</li><li>2048 bit size</li></ul><p>and is created like so:</p><pre><code><span class="kd">let</span> <span class="nv">attributes</span><span class="p">:</span> <span class="p">[</span><span class="nb">String</span><span class="p">:</span> <span class="nb">Any</span><span class="p">]</span> <span class="p">=</span> <span class="p">[</span>
+    <span class="n">kSecAttrKeyType</span> <span class="k">as</span> <span class="nb">String</span><span class="p">:</span> <span class="n">kSecAttrKeyTypeRSA</span><span class="p">,</span>
+    <span class="n">kSecAttrKeySizeInBits</span> <span class="k">as</span> <span class="nb">String</span><span class="p">:</span> <span class="mi">2048</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="kd">var</span> <span class="nv">error</span><span class="p">:</span> <span class="nb">Unmanaged</span><span class="p">&lt;</span><span class="n">CFError</span><span class="p">&gt;?</span>
+
+<span class="k">guard</span> <span class="kd">let</span> <span class="nv">secKey</span> <span class="p">=</span> <span class="n">SecKeyCreateRandomKey</span><span class="p">(</span><span class="n">attributes</span> <span class="k">as</span> <span class="n">CFDictionary</span><span class="p">,</span> <span class="p">&amp;</span><span class="n">error</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// Handle error</span>
+<span class="p">}</span>
+</code></pre><p>For detailed tutorial around creating cryptographic keys follow the <a href="https://developer.apple.com/documentation/security/certificate_key_and_trust_services/keys/generating_new_cryptographic_keys">Generating New Cryptographic Keys</a> article by Apple.</p><h2>Extracting PKCS #1</h2><p>You extract the PKCS #1 from a RSA <code>SecKey</code> using the <a href="https://developer.apple.com/documentation/security/1643698-seckeycopyexternalrepresentation"><code>SecKeyCopyExternalRepresentation(_:_:)</code></a> function:</p><pre><code><span class="kd">var</span> <span class="nv">error</span><span class="p">:</span> <span class="nb">Unmanaged</span><span class="p">&lt;</span><span class="n">CFError</span><span class="p">&gt;?</span>
+
+<span class="k">guard</span> <span class="kd">let</span> <span class="nv">pkcs1</span> <span class="p">=</span> <span class="n">SecKeyCopyExternalRepresentation</span><span class="p">(</span><span class="n">secKey</span><span class="p">,</span> <span class="p">&amp;</span><span class="n">error</span><span class="p">)</span> <span class="k">as</span> <span class="n">Data</span><span class="p">?</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// Handle error</span>
+<span class="p">}</span>
+</code></pre><p>It's worth noting that the <code>SecKey</code> API provides external representations of RSA keys only in PKCS #1.</p><h2>Creating PEM</h2><p>To create a valid PEM file, first Base64 encode the PKCS #1 data delimited into 64 character long lines as specified in the <a href="https://tools.ietf.org/html/rfc1421#section-4.3.2.4">Printable Encoding</a> section of <a href="https://tools.ietf.org/html/rfc1421">RFC 1421</a>. Conveniently enough <code>Data</code> provides an API with <a href="https://hungry.dev/posts/2020/base64-encoding-options">Base64 Encoding Options</a> for just that:</p><pre><code><span class="kd">let</span> <span class="nv">base64EncodedPKCS1</span> <span class="p">=</span> <span class="n">pkcs1</span><span class="p">.</span><span class="n">base64EncodedString</span><span class="p">(</span><span class="n">options</span><span class="p">:</span> <span class="p">[.</span><span class="n">lineLength64Characters</span><span class="p">,</span> <span class="p">.</span><span class="n">endLineWithLineFeed</span><span class="p">])</span>
+</code></pre><p>Lastly, provide appropriate <a href="https://tools.ietf.org/html/rfc1421#section-4.4">header and footer</a> boundaries for the encapsulated data:</p><pre><code><span class="kd">let</span> <span class="nv">pem</span> <span class="p">=</span> <span class="p">[</span>
+    <span class="s">&quot;-----BEGIN RSA PRIVATE KEY-----&quot;</span><span class="p">,</span>
+    <span class="n">base64EncodedPKCS1</span><span class="p">,</span>
+    <span class="s">&quot;-----END RSA PRIVATE KEY-----&quot;</span>
+<span class="p">].</span><span class="n">joined</span><span class="p">(</span><span class="n">separator</span><span class="p">:</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+</code></pre><p>End result should look something like this (contents between header and footer will differ of course):</p><pre><code class="language-no-highlight">-----BEGIN RSA PRIVATE KEY-----
+MIIEowIBAAKCAQEAoTWdgxkX6bhmR4rXHEIshUb3yBlFc/pSZOWNLUGH5OSO8wNP
+efv/5BhpUvNbxqOJZoPQEdWURNxnyplbInyok5aplbn1o5Rcl5Gs9YO/QitPO5P8
+K92cKZePAbgR1fBgwEwk9IkMZhQx+Ph7/+oSRpLCNh1tpuxJut+4gMcSuhrCem/y
+Z+VcwoHAzvt0WP6qwXWhI6pAi8aablPBodTl35Ip45h7rmvAiiws/VeuyELjncTD
+08PQAaBQYzDi3X0ryP47d5BfVd8ZqSzz8dQwTMGJbbToJaU+IRqKiuNBujJ+SKD7
+4ZBzwZMevpVgNX+jqbHsm95s4LeSKRhlezyG1QIDAQABAoIBAAurrn4FrIoCjAEE
+56LHlaKGazzEu5b0Wc+tIKXUlyp2c3TbWf8aQ8G3FLTpIk1EnJdb1o3b+PJtRGRR
+6tuZy7h3kUpiHorbnEJqzOsvQQLg0Mke4wQn9Hy8WKGGul/TGaYCPTCo1Ul0j9OW
+5Z82ymDqkf3J7pzFgWbyeFB2WQA4/zM61LEF1dvHYQjAM3Exe1zUuJRu52meE84/
+7cA7g7dVRiKs2tXzIsmC4parre5cBuQT1Jwu2QH7obp3ur7tEU156YwhYgaDO+ev
+OAzfhugSzHSk832LZplIxjDNl44jKzic/9tBaathgfUKyegYjtufO/zBXq0ZldNn
+8OPAUIECgYEA3R6RG0Io9eowxdStLuSBALOc4BYZB8BrIS7a/GNyObGBZQPBsWxa
+TaICqUX4hE3EsVn8OWuxErgd2NI3Gw3Q3PdELXhmHJD+WRnW0wJ4CWAbY21cRhMY
+B6SEDe+cxRYY9rAXT7kxUnMoZ4G2mtA4gulkcjQKwZubJfVZ3czh30ECgYEAuqO2
+fBNVyBHZUDkgUPsJi5r3n1kwblGaeQqbp16jNUsfOzSNaFz+jRF1BbI7OZWb1RM1
+vWwfTReeYOYfWaYwpxBcCG/U3XhTXJvLOukR3Wb8ZcE/kA0NyP9cKQy0g2Z373mp
+kBYQycyBXAwiMYFPfmlDwowDSjrDnPPz0uMWFpUCgYEAjBHv46+OWPEoQjmOFzVi
+zrn4ty7oXjOy6UtQJy8rzYY3LHErwqObtK/bNbWATvcgkSQqlYk1m2EMbywDAl1H
+IKJ2CsPJE3F53aFzpylaNr4tu1csa6tuvnClwlo2Gdb8q1AzBCqRJuSSBLdzoDAk
+jDEikwGKishyiKIacll1/8ECgYAqL2jGwKQJ9abV0COyyhsNN/iyRrmApecxZqlp
++iUPnawweJ9hsGtEvWZi5Dcou90eGxpxdyfYB/efVUROwhaLHFKBAa3uZQ0KiJg1
+94o3LdjssvJH//tWrAlLqfh/HsELGsetrp8azaOLh56O6/hozSgop/byZzfhmO5K
+g1NxxQKBgB0v2zSBUo4a4dPT+4b1wndNiPRibMRKPjyISVglm5p5yZiX9wrlqB2Y
+8t2FcgFjuovWvuHOnP2/72+uT4flR73FrJ4gKArk2QJYJV52N4Z1p/fC2jFSh/0J
+nIG3IPd+/S8HIDzJkK7/T06+H9ajdq+cE65g0wFQOXEaGKdsRd7U
+-----END RSA PRIVATE KEY-----
+
+</code></pre><p class="py-2"><a href="https://twitter.com/intent/tweet?url=https://hungry.dev/posts/posts/2020/exporting-private-rsa-seckey-as-pkcs1-pem&via=hngrydev&text=Exporting Private RSA SecKey as PKCS #1 PEM">Share this article on Twitter</a>. For any questions, comments or feedback reach out to me <a href="https://twitter.com/hngrydev">@hngrydev</a>.</p></div><footer><div class="container-md px-3 my-5 markdown-body"><div class="d-flex flex-justify-center"><p class="text-small text-gray v-align-middle">Styled with <a href="https://primer.style">Primer</a> | Generated using <a href="https://github.com/johnsundell/publish">Publish</a> | Hosted on <a href="https://pages.github.com">GitHub Pages</a></p></div></div></footer></body></html>
