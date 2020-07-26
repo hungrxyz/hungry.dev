@@ -19,9 +19,8 @@ jobs:
     - run: pip3 install pygments
       
     - name: Install Swift
-      uses: YOCKOW/Action-setup-swift@master
-      with:
-        swift-version: '5.1.2'
+      uses: fwal/setup-swift@v1
+    - run: swift --version
         
     - name: Build Publish
       run: |
