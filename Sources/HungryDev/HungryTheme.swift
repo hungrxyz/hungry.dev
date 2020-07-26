@@ -80,8 +80,8 @@ private struct HungryHTMLFactory<Site: Website>: HTMLFactory {
                         .text(". "),
                         .text("For any questions, comments or feedback reach out to me "),
                         .a(
-                            .text("@hngrydev"),
-                            .href("https://twitter.com/hngrydev")
+                            .text("@hungrxyz"),
+                            .href("https://twitter.com/hungrxyz")
                         ),
                         .text(".")
                     )
