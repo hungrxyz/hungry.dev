@@ -12,6 +12,7 @@ import Plot
 struct HungryDev: Website {
     enum SectionID: String, WebsiteSectionID {
         case posts
+        case apps
     }
 
     struct ItemMetadata: WebsiteItemMetadata {

@@ -84,6 +84,7 @@ public extension Plugin {
 try HungryDev().publish(using: [
     .installPlugin(.usLocaleDateFormatter()),
     .installPlugin(.pygmentize()),
+    .addPage(.init(path: "apps", content: Content(body: .init(node: .div(.h1("Apps"), .a(.text("Parachute"), .href("parachute"))))))),
     .addMarkdownFiles(),
     .sortItems(by: \.date, order: .ascending),
     .generateHTML(withTheme: .hungry),

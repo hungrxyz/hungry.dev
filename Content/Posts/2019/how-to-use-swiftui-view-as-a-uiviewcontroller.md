@@ -1,5 +1,6 @@
 ---
 date: 2019-10-23 10:00
+tags: post
 ---
 
 # How to use SwiftUI View as a UIViewController

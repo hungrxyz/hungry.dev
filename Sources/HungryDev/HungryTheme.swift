@@ -1,6 +1,6 @@
 //
 //  HungryTheme.swift
-//  
+//
 //
 //  Created by marko on 26.01.20.
 //
@@ -32,7 +32,7 @@ private struct HungryHTMLFactory<Site: Website>: HTMLFactory {
                     .h3(.text("Hi, this is my personal blog. I write about development on Apple Platforms.")),
                     .h2(.text("Posts")),
                     .itemList(
-                        for: context.allItems(sortedBy: \.date, order: .descending),
+                        for: context.items(taggedWith: Tag("post"), sortedBy: \.date, order: .descending),
                         on: context.site
                     )
                 ),
@@ -95,7 +95,7 @@ private struct HungryHTMLFactory<Site: Website>: HTMLFactory {
                       context: PublishingContext<Site>) throws -> HTML {
         HTML(
             .lang(context.site.language),
-            .head(for: page, on: context.site),
+            .head(for: page, on: context.site, stylesheetPaths: ["/primer.css", "/github.css"]),
             .body(
                 .header(for: context, selectedSection: nil),
                 .container(.contentBody(page.body)),
@@ -128,13 +128,25 @@ private extension Node where Context == HTML.BodyContext {
             .div(
                 .class("border-bottom border-gray-light"),
                 .container(
-                    .h3(.a(
-                        .class("text-gray-dark no-underline"),
-                        .text("hungry.dev"),
-                        .href("/")
+                    .div(
+                        .class("d-flex flex-items-baseline"),
+                        .a(
+                            .class("h3 py-3 pr-6 color-fg-default no-underline"),
+                            .text("hungry.dev"),
+                            .href("/")
+                        ),
+                        .a(
+                            .class("h5 p-3 color-fg-default no-underline"),
+                            .text("Posts"),
+                            .href("/")
+                        ),
+                        .a(
+                            .class("h5 p-3 color-fg-default no-underline"),
+                            .text("Apps"),
+                            .href("/apps")
                         )
                     ),
-                    marginY: 3
+                    marginY: 0
                 )
             )
         )
@@ -152,18 +164,18 @@ private extension Node where Context == HTML.BodyContext {
             .div(
                 .h3("\($0.key)"),
                 .forEach($0.value.sorted { $0.date > $1.date }) { item in
-                    .div(
-                        .class("py-2 d-flex flex-justify-between flex-items-center"),
-                        .div(.a(
-                            .text(item.title),
-                            .href(item.path)
-                            )
-                        ),
                         .div(
-                            .class("text-small text-gray"),
-                            .text(dateFormatter.string(from: item.date))
+                            .class("py-2 d-flex flex-justify-between flex-items-center"),
+                            .div(.a(
+                                .text(item.title),
+                                .href(item.path)
+                            )
+                            ),
+                            .div(
+                                .class("text-small text-gray"),
+                                .text(dateFormatter.string(from: item.date))
+                            )
                         )
-                    )
                 }
             )
         }
