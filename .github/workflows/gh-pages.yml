@@ -1,16 +1,16 @@
-name: Github Pages
+name: GitHub Pages
 
 on:
   push:
     branches:
-    - master
+    - main
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       
     - name: Set up Python
       uses: actions/setup-python@v1
